@@ -5,7 +5,7 @@ CFLAGS += -mcpu=cortex-a9 -mfloat-abi=softfp -mabi=aapcs-linux -mno-thumb-interw
 LDFLAGS += -T $(ARCH_DIR)/kernel.ld
 
 KERNEL_BOOT_HEAD = kernel/head.o
-ARCH_OBJS += kernel/entry.o kernel/io.o
+ARCH_OBJS += kernel/entry.o kernel/io.o kernel/atomic.o
 
 QEMU      ?= qemu-system-arm
 QEMU_MACH ?= vexpress-a9

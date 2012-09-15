@@ -7,7 +7,7 @@ KCLEANS += bootfd.img
 INCLUDES += -I$(ARCH_DIR)/include/
 
 KERNEL_BOOT_HEAD = kernel/head.o
-ARCH_OBJS += kernel/entry.o kernel/io.o
+ARCH_OBJS += kernel/entry.o kernel/io.o kernel/atomic.o
 
 QEMU ?= qemu-system-i386
 QEMU_BOOT = $(QEMU) -fda bootfd.img
