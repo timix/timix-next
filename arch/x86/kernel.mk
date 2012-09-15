@@ -4,9 +4,10 @@ BOOTFDDIR = $(ARCH_DIR)/bootfd
 CFLAGS += -fno-omit-frame-pointer -fno-stack-protector -gdwarf-2 -m32
 LDFLAGS += -melf_i386 -Ttext 100000
 KCLEANS += bootfd.img
+INCLUDES += -I$(ARCH_DIR)/include/
 
-KERNEL_BOOT_HEAD = head.o
-ARCH_OBJS += entry.o
+KERNEL_BOOT_HEAD = kernel/head.o
+ARCH_OBJS += kernel/entry.o kernel/io.o
 
 QEMU ?= qemu-system-i386
 QEMU_BOOT = $(QEMU) -fda bootfd.img
