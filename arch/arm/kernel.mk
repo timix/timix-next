@@ -1,10 +1,11 @@
 ARCH_DIR=arch/arm
 
+INCLUDES += -I$(ARCH_DIR)/include/
 CFLAGS += -mcpu=cortex-a9 -mfloat-abi=softfp -mabi=aapcs-linux -mno-thumb-interwork
 LDFLAGS += -T $(ARCH_DIR)/kernel.ld
 
-KERNEL_BOOT_HEAD = head.o
-ARCH_OBJS += entry.o
+KERNEL_BOOT_HEAD = kernel/head.o
+ARCH_OBJS += kernel/entry.o kernel/io.o
 
 QEMU      ?= qemu-system-arm
 QEMU_MACH ?= vexpress-a9
