@@ -2,7 +2,7 @@ ENTRY (_start)
 
 SECTIONS
 {
-  . = VOFF;
+  . = 0;
   .text : { *(.text*) *(.rodata*) }
   .data : { *(.data*) }
   .bss : { *(.bss*) *(COMMON*) }
