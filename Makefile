@@ -31,9 +31,11 @@ LD                = $(CROSS_COMPILE)ld
 AR                = $(CROSS_COMPILE)ar
 OBJCOPY           = $(CROSS_COMPILE)objcopy
 
-
 .PHONY: all clean veryclean
 all: vmtimiz
+
+KCLEANS :=
+KVERYCLEANS :=
 
 # Platform makefile
 -include arch/$(ARCH)/kernel.mk
@@ -95,10 +97,8 @@ clean:
 	@rm -f $(ALL_KOBJS)
 	@rm -f $(KLIBS)
 	@rm -f $(BUILDDIR)/vmtimix
+	@rm -f $(KCLEANS)
 
 veryclean: clean
-	@rm -rf doc
 	@rm -rf $(BUILDDIR)
-	@rm -f $(INCDIR)/$(ARCH)
-	@rm -f $(KDIR)/arch
 	@rm -f vmtimiz
