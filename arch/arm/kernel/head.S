@@ -20,6 +20,7 @@
 .globl _start
 _start:
   ldr sp, =istack
+  mov r0, r2      // atags pointer in arg0
   b c_entry
 
 .data
