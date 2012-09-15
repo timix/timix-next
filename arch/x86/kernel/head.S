@@ -31,6 +31,7 @@ mb_header:
 _start:
     cli
     leal istack, %esp
+    push %ebx         // mb_info pointer
     call c_entry      // TODO: Pass multiboot info to c_entry
 
 .data
