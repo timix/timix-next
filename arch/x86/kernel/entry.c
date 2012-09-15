@@ -18,8 +18,9 @@
 //
 
 #include <timix/kernel.h>
+#include <multiboot.h>
 
-void c_entry()
+void c_entry(struct mb_info *info)
 {
     kernel_main();
 }

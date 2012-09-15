@@ -36,6 +36,7 @@ mb_header:
 _start:
     cli                                     // Disable Interrupts
     leal istack, %esp                       // Setup initial stack pointer.
+    push %ebx                               // arg0 = mb_info pointer
     call c_entry                            // TODO: Pass multiboot info to c_entry
 
 .data
