@@ -23,6 +23,7 @@
 .globl _start
 _start:
   ldr sp, =istack     // Setup initial stack pointer
+  mov r0, r2          // atags pointer in arg0
   b c_entry           // Branch to C entry point
 
 .data

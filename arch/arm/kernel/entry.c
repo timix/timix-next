@@ -18,8 +18,9 @@
 //
 
 #include <timix/kernel.h>
+#include <atags.h>
 
-void c_entry()
+void c_entry(struct atag *tags)
 {
     kernel_main();
 }
