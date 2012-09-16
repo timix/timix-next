@@ -1,1 +1,1 @@
-KERNEL_OBJS += kernel.o mutex.o panic.o
+KERNEL_OBJS += kernel.o mutex.o panic.o malloc.o

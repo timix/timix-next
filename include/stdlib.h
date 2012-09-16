@@ -17,13 +17,15 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef STDDEF_H_
-#define STDDEF_H_
+#ifndef STDLIB_H_
+#define STDLIB_H_
 
-#ifndef NULL
-#define NULL ((void*)0)
-#endif
+#include <stddef.h>
 
-typedef unsigned size_t;
+void* calloc(size_t num, size_t size);
+void* malloc(size_t size);
+void* realloc(void* ptr, size_t size);
+void* memalign(size_t align, size_t size);
+void  free(void* ptr);
 
-#endif // STDDEF_H_
+#endif // STDLIB_H_

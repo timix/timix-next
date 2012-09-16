@@ -15,6 +15,7 @@ endif
 ARCH        ?= x86
 KDIR        = kernel
 INCDIR      = include
+LIBDIR      = lib
 BUILDDIR    = build
 DEP_SUFFIX  = d
 
@@ -43,14 +44,15 @@ KVERYCLEANS :=
 -include $(KDIR)/kernel.mk
 # Drivers Objects
 -include $(KDIR)/kernel.mk
-# Tools
--include $(TOOLSDIR)/tools.mk
+# Library Objects
+-include $(LIBDIR)/kernel.mk
 
 ###################### Full Targets ############################
 KERNEL_OBJS += $(DRIVER_OBJS:%=drivers/%)
 KERNEL_BOOT_HEAD := $(BUILDDIR)/arch/$(ARCH)/$(KERNEL_BOOT_HEAD)
-KOBJS = $(KERNEL_OBJS:%=$(BUILDDIR)/$(KDIR)/%)
+KOBJS += $(KERNEL_OBJS:%=$(BUILDDIR)/$(KDIR)/%)
 KOBJS += $(ARCH_OBJS:%=$(BUILDDIR)/arch/$(ARCH)/%)
+KOBJS += $(LIB_OBJS:%=$(BUILDDIR)/lib/%)
 ALL_KOBJS += $(KOBJS)
 ALL_KOBJS += $(KERNEL_BOOT_HEAD)
 

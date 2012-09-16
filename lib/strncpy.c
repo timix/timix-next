@@ -17,13 +17,10 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef STDDEF_H_
-#define STDDEF_H_
+#include <timix/string-impl.h>
 
-#ifndef NULL
-#define NULL ((void*)0)
-#endif
+char *strncpy(char *str1, const char *str2, size_t n)
+{
+    return _strncpy(str1, str2, n);
+}
 
-typedef unsigned size_t;
-
-#endif // STDDEF_H_

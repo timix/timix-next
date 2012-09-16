@@ -17,13 +17,37 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef STDDEF_H_
-#define STDDEF_H_
+#include <stdlib.h>
+#include <timix/assert.h>
 
-#ifndef NULL
-#define NULL ((void*)0)
-#endif
+void* malloc(size_t bytes)
+{
+    assert(0 && "malloc unimplemented\n");
+    return NULL;
+}
 
-typedef unsigned size_t;
+void* calloc(size_t num, size_t size)
+{
+    assert(0 && "calloc unimplemented\n");
+    return NULL;
+}
 
-#endif // STDDEF_H_
+void* realloc(void* ptr, size_t size)
+{
+
+    assert(0 && "realloc unimplemented\n");
+    return NULL;
+}
+
+void* memalign(size_t align, size_t size)
+{
+
+    assert(0 && "memalign unimplemented\n");
+    return NULL;
+}
+
+void  free(void* ptr)
+{
+    assert(0 && "Malloc unimplemented\n");
+    return;
+}
