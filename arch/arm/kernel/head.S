@@ -21,6 +21,9 @@
 // Kernel Entry Point
 //
 .globl _start
+
+// Page align entry point
+.align 12
 _start:
   ldr sp, =istack     // Setup initial stack pointer
   mov r0, r2          // atags pointer in arg0

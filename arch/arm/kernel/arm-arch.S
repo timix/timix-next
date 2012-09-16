@@ -17,11 +17,23 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <timix/kernel.h>
-#include <atags.h>
-#include <arm-arch.h>
+.globl readCpsr
+.globl writeCpsr
+.globl readSpsr
+.globl writeSpsr
 
-void c_entry(struct atag *tags)
-{
-    kernel_main();
-}
+readCpsr:
+    mrs r0, cpsr
+    bx lr
+
+writeCpsr:
+    msr cpsr, r0
+    bx lr
+
+readSpsr:
+    mrs r0, spsr
+    bx lr
+
+writeSpsr:
+    msr spsr, r0
+    bx lr

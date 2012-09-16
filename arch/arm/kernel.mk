@@ -6,11 +6,12 @@ LDFLAGS += -T $(ARCH_DIR)/kernel.ld
 
 KERNEL_BOOT_HEAD = kernel/head.o
 ARCH_OBJS += kernel/entry.o kernel/io.o kernel/atomic.o
+ARCH_OBJS += kernel/arm-arch.o
 
 QEMU      ?= qemu-system-arm
 QEMU_MACH ?= vexpress-a9
 QEMU_MEM  ?= 16
-QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel $(BUILDDIR)/vmtimix
+QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel $(BUILDDIR)/vmtimix -nographic
 
 #
 # Run on qemu

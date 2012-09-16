@@ -21,6 +21,10 @@
 #define COMPILER_H_
 
 #ifdef __GNUC__
+#define MUST_CHECK  __attribute__((warn_unused_result))
+
+#define __unused    __attribute__((unused))
+#define __packed    __attribute__((packed))
 
 #define MUST_CHECK __attribute__((warn_unused_result))
 

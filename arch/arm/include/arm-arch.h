@@ -17,11 +17,29 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include <timix/kernel.h>
-#include <atags.h>
-#include <arm-arch.h>
+#ifndef TIMIX_ARM_ARCH_H_
+#define TIMIX_ARM_ARCH_H_
 
-void c_entry(struct atag *tags)
-{
-    kernel_main();
-}
+#include <stdint.h>
+
+/**
+ * @brief Read the Current Processor State Register.
+ */
+uint32_t readCpsr();
+
+/**
+ * @brief Write the Current Processor State Register.
+ */
+void writeCpsr(uint32_t val);
+
+/**
+ * @brief Read the Saved Processor State Register.
+ */
+uint32_t readSpsr();
+
+/**
+ * @brief Write the Saved Processor State Register.
+ */
+void writeSpsr(uint32_t val);
+
+#endif // TIMIX_ARM_ARCH_H_
