@@ -37,5 +37,6 @@ typedef unsigned long long  uint64_t;
 // IO Address-Space Type.
 //
 typedef uint16_t    ioaddr_t;
+typedef uint32_t    intptr_t;
 
 #endif

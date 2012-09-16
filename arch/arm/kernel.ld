@@ -2,8 +2,26 @@ ENTRY (_start)
 
 SECTIONS
 {
-  . = 0;
-  .text : { *(.text*) *(.rodata*) }
-  .data : { *(.data*) }
-  .bss : { *(.bss*) *(COMMON*) }
+_KERNEL_START_ = .;
+
+  .text : {
+_TEXT_START_ = .;
+      *(.text)
+_TEXT_END_ = .;
+   }
+
+  .data : {
+_DATA_START_ = .;
+      *(.data*)
+_DATA_END_ = .;
+  }
+
+
+  .bss : {
+_BSS_START_ = .;
+      *(.bss*)
+_BSS_END_ = .;
+   }
+
+_KERNEL_END_ = .;
 }

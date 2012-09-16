@@ -11,7 +11,7 @@ ARCH_OBJS += kernel/arm-arch.o
 QEMU      ?= qemu-system-arm
 QEMU_MACH ?= vexpress-a9
 QEMU_MEM  ?= 16
-QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel $(BUILDDIR)/vmtimix -nographic
+QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel $(BUILDDIR)/vmtimix
 
 #
 # Run on qemu

@@ -17,27 +17,22 @@
 //  along with Timix.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef ARCH_TYPES_H_
-#define ARCH_TYPES_H_
+#include <arch/types.h>
 
-//
-// Numeric Types
-//
-typedef char                int8_t;
-typedef short               int16_t;
-typedef long                int32_t;
-typedef long long           int64_t;
+/**
+ * @brief Physical address type.
+ */
+typedef intptr_t pa_t;
 
-typedef unsigned char       uint8_t;
-typedef unsigned short      uint16_t;
-typedef unsigned long       uint32_t;
-typedef unsigned long long  uint64_t;
+/**
+ * @brief Initialize the physical memory manager.
+ */
+void pmm_init(void);
 
-//
-// IO Address-Space Type.
-//
-typedef uint32_t            ioaddr_t;
-
-typedef uint32_t            intptr_t;
-
-#endif
+/**
+ * @brief Add a region of physical memory
+ *
+ * @param start The base address of the phyical region.
+ * @param size  The size of they physical region.
+ */
+int pmm_add_region(pa_t start, pa_t size);
