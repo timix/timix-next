@@ -22,13 +22,17 @@
 //
 .globl _start
 
-// Page align entry point
-.align 12
 _start:
   ldr sp, =istack     // Setup initial stack pointer
   mov r0, r2          // atags pointer in arg0
   b c_entry           // Branch to C entry point
+.ltorg                // Place constant pool here
 
+//
+// Initial stack: 1 frame.
+//
+.align 12
+istack_end:
 .data
 .space 4096           // Some space for the initial stack.
 istack:               // TODO: This will only work if kernel is 1:1 mapped.

@@ -11,16 +11,24 @@ ARCH_OBJS += kernel/arm-arch.o
 QEMU      ?= qemu-system-arm
 QEMU_MACH ?= vexpress-a9
 QEMU_MEM  ?= 16
-QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel $(BUILDDIR)/vmtimix
+QEMU_BOOT := $(QEMU) -m $(QEMU_MEM) -M $(QEMU_MACH) -kernel Image
+
+KCLEANS += Image
+
+all: Image
+
+Image: $(BUILDDIR)/vmtimix
+	@echo ' (OBJCOPY): ' $@
+	$Q $(OBJCOPY) -O binary $< $@
 
 #
 # Run on qemu
 #
-boot: $(BUILDDIR)/vmtimix
+boot: Image
 	$(QEMU_BOOT)
 
 #
 # Run on qemu, wait for gdb to attach
 #
-gdb-boot: $(BUILDDIR)/vmtimix
+gdb-boot: Image
 	$(QEMU_BOOT) -S -s

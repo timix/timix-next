@@ -2,6 +2,7 @@ ENTRY (_start)
 
 SECTIONS
 {
+  . = 0x60010000;
 _KERNEL_START_ = .;
 
   .text : {
