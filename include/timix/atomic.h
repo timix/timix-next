@@ -23,6 +23,8 @@
 #define XCHG_SUCCESS    0
 #define XCHG_FAILURE    1
 
+#ifndef ASSEMBLER
+
 /**
  * @brief Atomically swaps a value into a memory location.
  *
@@ -82,4 +84,5 @@ int atomic_swap8_conditional(void *mem, void* newval_lo, void* newval_hi,
  */
 int atomic_add(int *mem, int val);
 
+#endif // ASSEMBLER
 #endif // TIMIX_ATOMIC_H_
