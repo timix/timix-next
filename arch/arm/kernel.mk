@@ -17,7 +17,7 @@ KCLEANS += Image
 
 all: Image
 
-Image: $(BUILDDIR)/vmtimix
+Image: $O/vmtimix
 	@echo ' (OBJCOPY): ' $@
 	$Q $(OBJCOPY) -O binary $< $@
 
