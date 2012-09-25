@@ -9,6 +9,11 @@ else
 Q := @
 endif
 
+###############Build Output Directory################
+# Use O=. to build in-tree.
+#####################################################
+O ?= build
+
 ############## VARIABLE DEFINITIONS #################
 # TODO: Arch assigned to the host arch.
 #####################################################
@@ -16,8 +21,6 @@ ARCH        ?= x86
 KDIR        = kernel
 INCDIR      = include
 LIBDIR      = lib
-BUILDDIR    = build
-DEP_SUFFIX  = d
 
 ############# BUILD PARAMETER VARIABLES ################
 CFLAGS = -nostdinc -fno-strict-aliasing -fno-builtin -Wall -Werror
@@ -42,53 +45,51 @@ KVERYCLEANS :=
 -include arch/$(ARCH)/kernel.mk
 # General Kernel Objects
 -include $(KDIR)/kernel.mk
-# Drivers Objects
--include $(KDIR)/kernel.mk
 # Library Objects
 -include $(LIBDIR)/kernel.mk
 
 ###################### Full Targets ############################
 KERNEL_OBJS += $(DRIVER_OBJS:%=drivers/%)
-KERNEL_BOOT_HEAD := $(BUILDDIR)/arch/$(ARCH)/$(KERNEL_BOOT_HEAD)
-KOBJS += $(KERNEL_OBJS:%=$(BUILDDIR)/$(KDIR)/%)
-KOBJS += $(ARCH_OBJS:%=$(BUILDDIR)/arch/$(ARCH)/%)
-KOBJS += $(LIB_OBJS:%=$(BUILDDIR)/lib/%)
+KERNEL_BOOT_HEAD := $O/arch/$(ARCH)/$(KERNEL_BOOT_HEAD)
+KOBJS += $(KERNEL_OBJS:%=$O/$(KDIR)/%)
+KOBJS += $(ARCH_OBJS:%=$O/arch/$(ARCH)/%)
+KOBJS += $(LIB_OBJS:%=$O/lib/%)
 ALL_KOBJS += $(KOBJS)
 ALL_KOBJS += $(KERNEL_BOOT_HEAD)
 
 ###################### Build Rules ########################
-$(BUILDDIR)/%.o: %.S
+$O/%.o: %.S
 	@echo '      (AS): ' $@
 	$Qmkdir -p `dirname $@`
-	$Q$(CC) $(CFLAGS) -DASSEMBLER $(INCLUDES) -MD -MP -MT $(<:%.S=$(BUILDDIR)/%.o) -c -o $@ $<
+	$Q$(CC) $(CFLAGS) -DASSEMBLER $(INCLUDES) -MD -MP -MT $(<:%.S=$O/%.o) -c -o $@ $<
 	$Q$(OBJCOPY) -R .comment -R .note $@ $@
 
-$(BUILDDIR)/%.o: %.c
+$O/%.o: %.c
 	@echo '      (CC): ' $@
 	$Qmkdir -p `dirname $@`
-	$Q$(CC) $(CFLAGS) $(INCLUDES) -MD -MP -MT $(<:%.c=$(BUILDDIR)/%.o) -c -o $@ $<
+	$Q$(CC) $(CFLAGS) $(INCLUDES) -MD -MP -MT $(<:%.c=$O/%.o) -c -o $@ $<
 	$Q$(OBJCOPY) -R .comment -R .note $@ $@
 
-$(BUILDDIR)/%.a:
-	@mkdir -p $(BUILDDIR)
+$O/%.a:
+	@mkdir -p $O
 	@echo '      (AR): ' $@
 	@rm -f $@
 	$Q$(AR) rc $@ $^
 
-$(BUILDDIR)/vmtimix: $(KERNEL_BOOT_HEAD) $(KOBJS)
-	@mkdir -p $(BUILDDIR)
+$O/vmtimix: $(KERNEL_BOOT_HEAD) $(KOBJS)
+	@mkdir -p $O
 	@echo '      (LD): ' $@
 	$Q$(LD) -r $(LDFLAGS) -o $@.o $^
 	$Q$(LD) $(LDFLAGS) -o $@ $@.o
 	$Qrm -f $@.o
 
-vmtimiz: $(BUILDDIR)/vmtimix
+vmtimiz: $O/vmtimix
 	@echo '    (GZIP): ' $@
 	$Qgzip -c $< > $@
 
 ###################### DEPS ######################
-KERN_DEPS = $(patsubst %.o, %.$(DEP_SUFFIX), $(ALL_KOBJS))
-ifneq (,$(wildcard $(BUILDDIR)))
+KERN_DEPS = $(patsubst %.o, %.d, $(ALL_KOBJS))
+ifneq (,$(wildcard $O))
 ifneq (,$(KERN_DEPS))
 -include $(KERN_DEPS)
 endif
@@ -98,9 +99,9 @@ endif
 clean:
 	@rm -f $(ALL_KOBJS)
 	@rm -f $(KLIBS)
-	@rm -f $(BUILDDIR)/vmtimix
+	@rm -f $O/vmtimix
 	@rm -f $(KCLEANS)
 
 veryclean: clean
-	@rm -rf $(BUILDDIR)
 	@rm -f vmtimiz
+	@rm -f $(KVERYCLEANS)
