@@ -30,6 +30,7 @@
 _start:
   mov r0, pc
   bic r0, r0, #0xff   // r0 = physical address of _start
+  mov r10, r0         // Save physical start address
   bl  __setup_pgtbl   // Setup the initial page directory
   ldr r1, =__call_kernel
   bl  __enable_mmu    // Turn on MMU
@@ -39,6 +40,8 @@ _start:
 // Jump to the kernel (assumes mmu enabled)
 //
 __call_kernel:
+  ldr r0, =kern_phys_base
+  str r1, [r0]        // save kern_phys_start value
   mov r0, r2          // atags pointer in arg0
   ldr sp, =istack     // Setup initial stack pointer
   b c_entry           // Branch to C entry point
@@ -84,7 +87,6 @@ __setup_pgtbl:
   sub r3, r0, r4      // r3 = phys_start - pgdir_size
   ldr r4, =SECTION_MASK
   ldr r8, =_KERNEL_END_
-
   //
   // zero out page directory
   //
@@ -130,6 +132,10 @@ __setup_pgtbl:
 
   mov r0, r3          // return pagedir location
   bx lr
+
+.globl kern_phys_base
+kern_phys_base:
+.space 4
 
 //
 // Initial stack: 1 frame.

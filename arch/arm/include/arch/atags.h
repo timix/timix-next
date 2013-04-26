@@ -120,7 +120,7 @@ struct atag {
     } u;
 };
 
-static inline int atags_valid(struct atag* atag)
+static inline int atags_ok(struct atag* atag)
 {
     return (atag->hdr.size == 2 || atag->hdr.size == 5) &&
             atag->hdr.tag == ATAG_CORE;
